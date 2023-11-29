@@ -259,8 +259,7 @@ return [
 
     'values' => [
         'occurred_at' => [
-            'today' => '今日'
+            'tomorrow' => '翌日'
         ]
     ],
-
 ];

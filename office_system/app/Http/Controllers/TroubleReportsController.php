@@ -14,7 +14,7 @@ class TroubleReportsController extends Controller
 
     private $validator = [
         'function' => 'required',
-        'occurred_at' => 'required|date|before:today',
+        'occurred_at' => 'required|date|before:tomorrow',
         'phenomenon' => 'required|string|between:20, 10000',
         'reproduction_steps' => 'required|string|between:20, 10000'
     ];
