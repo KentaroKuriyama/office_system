@@ -14,15 +14,6 @@
                         <div class="col-md-8 offset-md-2">
                             <h2 class="fs-1 mb-5 text-center fw-bold">障害報告入力画面</h2>
                             <p>以下の項目に必要事項を入力してください</p>
-                            @if ($errors->any())
-                                <div class="rounded bg-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li class="text-white">{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
                             <form method="post" action="{{ route('trouble_report.post') }}">
                                 @csrf
                                 <div class="col-md-6 mb-3">

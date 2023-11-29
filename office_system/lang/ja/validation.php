@@ -257,4 +257,10 @@ return [
         'year' => '年',
     ],
 
+    'values' => [
+        'occurred_at' => [
+            'today' => '今日'
+        ]
+    ],
+
 ];

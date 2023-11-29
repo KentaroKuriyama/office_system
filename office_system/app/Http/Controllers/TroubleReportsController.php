@@ -14,7 +14,7 @@ class TroubleReportsController extends Controller
 
     private $validator = [
         'function' => 'required',
-        'occurred_at' => 'required',
+        'occurred_at' => 'required|date|before:today',
         'phenomenon' => 'required|string|between:20, 10000',
         'reproduction_steps' => 'required|string|between:20, 10000'
     ];
@@ -38,11 +38,9 @@ class TroubleReportsController extends Controller
     public function reportPost(Request $request) :object
     {
         $input = $request->only($this->formItems);
-
         $validator = Validator::make($input, $this->validator);
 
         if ($validator->fails()) {
-            // actionでクラス名とアクションで可読性を高める
             return redirect()->action([TroubleReportsController::class, 'reportInput'])
                 ->withInput()
                 ->withErrors($validator);
@@ -51,12 +49,11 @@ class TroubleReportsController extends Controller
         // 第一引数をキーとしてセッション変数にフォームの入力値を保存
         $request->session()->put('trouble_input', $input);
 
-        // 判定に問題が無ければ確認画面にリダリレクト
         return redirect()->action([TroubleReportsController::class, 'reportConfirm']);
     }
 
     /**
-     * 確認画面へ遷移
+     * 確認画面の表示
      *
      * @param object $request
      * @return object
@@ -66,7 +63,6 @@ class TroubleReportsController extends Controller
         // セッションから値を取り出す
         $input = $request->session()->get('trouble_input');
 
-        // セッションに値が無ければフォームに戻す
         if (empty($input)) {
             return redirect()->action([TroubleReportsController::class, 'reportInput']);
         }
@@ -74,16 +70,30 @@ class TroubleReportsController extends Controller
         return view('trouble_reports.confirm', ['input' => $input]);
     }
 
-    public function reportSend(Request $request)
+    /**
+     * 完了画面へ遷移
+     *
+     * @param object $request
+     * @return object
+     */
+    public function reportSend(Request $request) :object
     {
         // セッションから値を取り出す
         $input = $request->session()->get('trouble_input');
+        $request->session()->regenerateToken();
 
         // 戻るボタンが押されたら入力値と共にフォームにへ戻る
         if ($request->has('back')) {
             return redirect()->action([TroubleReportsController::class, 'reportInput'])
                 ->withInput($input);
         }
+
+        $user = User::find(Auth::user()->id);
+
+        $trouble = new Trouble;
+        $trouble->fill([
+
+        ]);
     }
 
     public function reportResult()
