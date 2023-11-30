@@ -259,7 +259,7 @@ return [
 
     'values' => [
         'occurred_at' => [
-            'tomorrow' => '翌日'
+            'now' => '現在時刻'
         ]
     ],
 ];

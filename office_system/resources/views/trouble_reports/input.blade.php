@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{ config('app.name', 'Laravel') }} | 障害報告入力画面</title>
+        <title>{{ config('app.name', 'Laravel') }} | 障害報告入力</title>
     </head>
     <body>
         @extends('layouts.app')
@@ -13,6 +13,11 @@
                     <div class="row bg-light text-dark py-5">
                         <div class="col-md-8 offset-md-2">
                             <h2 class="fs-1 mb-5 text-center fw-bold">障害報告入力画面</h2>
+                            @if (session('error'))
+                                <div class="alert alert-success text-center fw-bold">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
                             <p>以下の項目に必要事項を入力してください</p>
                             <form method="post" action="{{ route('trouble_report.post') }}">
                                 @csrf
@@ -32,7 +37,7 @@
                                     @error('occurred_at')
                                         <b><span class="text-danger">・{{$message}}</span></b>
                                     @enderror
-                                    <input type="date" name="occurred_at" class="form-control" value="{{ old('occurred_at') }}">
+                                    <input type="datetime-local" name="occurred_at" class="form-control" value="{{ old('occurred_at') }}">
                                 </div>
                                 <div class="mb-4">
                                     <h5><b>現象</b></h5>

@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{ config('app.name', 'Laravel') }} | 障害報告確認画面</title>
+        <title>{{ config('app.name', 'Laravel') }} | 障害報告確認</title>
     </head>
     <body>
         @extends('layouts.app')
@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <h5><b>発生日時</b></h5>
-                                    {{ $input['occurred_at'] }}
+                                    {{ \Carbon\Carbon::parse($input['occurred_at'])->format('Y-m-d H:i') }}
                                 </div>
                                 <div class="mb-4">
                                     <h5><b>現象</b></h5>
@@ -32,7 +32,7 @@
                                     <h5><b>再現手順</b></h5>
                                     {!! nl2br(e($input['reproduction_steps'])) !!}
                                 </div>
-                                <div class="text-center">
+                                <div class="d-flex justify-content-between">
                                     <button type="submit" class="m-5 btn btn-success" name="back">修正する</button>
                                     <button type="submit" class="m-5 btn btn-primary">送信する</button>
                                 </div>

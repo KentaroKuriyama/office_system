@@ -14,7 +14,7 @@ class TroubleReportsController extends Controller
 
     private $validator = [
         'function' => 'required',
-        'occurred_at' => 'required|date|before:tomorrow',
+        'occurred_at' => 'required|date|before_or_equal:now',
         'phenomenon' => 'required|string|between:20, 10000',
         'reproduction_steps' => 'required|string|between:20, 10000'
     ];
@@ -91,13 +91,38 @@ class TroubleReportsController extends Controller
         $user = User::find(Auth::user()->id);
 
         $trouble = new Trouble;
+        $trouble->setTroubleReportFillable();
         $trouble->fill([
-
+            'function' => $input['function'],
+            'occurred_at' => $input['occurred_at'],
+            'phenomenon' => $input['phenomenon'],
+            'reproduction_steps' => $input['reproduction_steps'],
+            'register_type' => 1,
+            'status' => 1,
+            'create_user' => $user->id,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => null
         ]);
+        $trouble->save();
+
+        if ($trouble->save()) {
+            return redirect()->action([TroubleReportsController::class, 'reportResult']);
+        } else {
+            return redirect()->action([TroubleReportsController::class, 'reportInput'])->with('error', 'メールの送信に失敗しました。もう一度やり直してください');
+        }
+
     }
 
-    public function reportResult()
+    public function reportResult(Request $request)
     {
+        $input = $request->session()->get('trouble_input');
 
+        if (empty($input)) {
+            return redirect()->action([TroubleReportsController::class, 'reportInput']);
+        }
+
+        //フォームの値を消去する
+        $request->session()->forget('trouble_input');
+        return view('trouble_reports.result');
     }
 }
