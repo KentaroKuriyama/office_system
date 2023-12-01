@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Trouble;
 use App\Models\User;
 use App\Mail\troubleReport;
+use App\Mail\troubleReportForAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Mail\Mailer;
@@ -62,7 +63,6 @@ class TroubleReportsController extends Controller
      */
     public function reportConfirm(Request $request) :object
     {
-        // セッションから値を取り出す
         $input = $request->session()->get('trouble_input');
 
         if (empty($input)) {
@@ -80,9 +80,12 @@ class TroubleReportsController extends Controller
      */
     public function reportSend(Request $request, Mailer $mailer) :object
     {
-        // セッションから値を取り出す
         $input = $request->session()->get('trouble_input');
         $user = User::find(Auth::user()->id);
+        // 管理者を取得する
+        // $admins = User::where('role_id', 1)
+        //         ->orwhere('role_id', 2)
+        //         ->get();
         $request->session()->regenerateToken();
 
         // 戻るボタンが押されたら入力値と共にフォームにへ戻る
@@ -108,6 +111,10 @@ class TroubleReportsController extends Controller
 
         if ($trouble->save()) {
             $mailer->to($user->email)->send(new troubleReport($input, $user));
+            // 管理者全員にメールを送信する
+            // foreach ($admins as $admin) {
+            //     $mailer->to($admin->email)->send(new troubleReportForAdmin($input));
+            // }
             return redirect()->action([TroubleReportsController::class, 'reportResult']);
         } else {
             return redirect()->action([TroubleReportsController::class, 'reportInput'])->with('error', 'メールの送信に失敗しました。もう一度やり直してください');

@@ -1,8 +1,10 @@
 <html>
     <body>
-        <h2>{{ $user->name }}様</h2>
         <h2>障害報告内容の確認</h2>
-        <h3>以下の内容で障害報告を受け付けました。</h3>
+        <h3>
+            以下の内容で障害報告を受け付けました。<br>
+            お手すきの担当者は確認をお願いします
+        </h3>
         <p>送信内容</p>
         <table style="border-collapse:collapse;border:1px solid #ccc;width:100%">
             <tr>
@@ -24,8 +26,6 @@
         </table>
         <p style="line-height:3">
             ※このメールは自動送信です。返信はできませんので予めご了承ください。<br>
-            もしお心当たりのない方は恐れ入りますが以下のアドレスにご連絡ください。<br>
-            連絡先：support@example.com
         </p>
     </body>
 </html>
