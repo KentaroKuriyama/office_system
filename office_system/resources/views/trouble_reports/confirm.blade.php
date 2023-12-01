@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <h5><b>発生日時</b></h5>
-                                    {{ \Carbon\Carbon::parse($input['occurred_at'])->format('Y-m-d H:i') }}
+                                    {{ \Carbon\Carbon::parse($input['occurred_at'])->format('Y年m月d日 H時i分') }}
                                 </div>
                                 <div class="mb-4">
                                     <h5><b>現象</b></h5>

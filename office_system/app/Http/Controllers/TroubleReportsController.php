@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Trouble;
 use App\Models\User;
+use App\Mail\troubleReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Mail\Mailer;
 use Validator;
 
 class TroubleReportsController extends Controller
@@ -76,10 +78,11 @@ class TroubleReportsController extends Controller
      * @param object $request
      * @return object
      */
-    public function reportSend(Request $request) :object
+    public function reportSend(Request $request, Mailer $mailer) :object
     {
         // セッションから値を取り出す
         $input = $request->session()->get('trouble_input');
+        $user = User::find(Auth::user()->id);
         $request->session()->regenerateToken();
 
         // 戻るボタンが押されたら入力値と共にフォームにへ戻る
@@ -87,8 +90,6 @@ class TroubleReportsController extends Controller
             return redirect()->action([TroubleReportsController::class, 'reportInput'])
                 ->withInput($input);
         }
-
-        $user = User::find(Auth::user()->id);
 
         $trouble = new Trouble;
         $trouble->setTroubleReportFillable();
@@ -106,6 +107,7 @@ class TroubleReportsController extends Controller
         $trouble->save();
 
         if ($trouble->save()) {
+            $mailer->to($user->email)->send(new troubleReport($input, $user));
             return redirect()->action([TroubleReportsController::class, 'reportResult']);
         } else {
             return redirect()->action([TroubleReportsController::class, 'reportInput'])->with('error', 'メールの送信に失敗しました。もう一度やり直してください');
@@ -121,7 +123,6 @@ class TroubleReportsController extends Controller
             return redirect()->action([TroubleReportsController::class, 'reportInput']);
         }
 
-        //フォームの値を消去する
         $request->session()->forget('trouble_input');
         return view('trouble_reports.result');
     }
