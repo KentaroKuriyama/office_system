@@ -14,6 +14,9 @@ class troubleReport extends Mailable
 {
     use Queueable, SerializesModels;
 
+    private $trouble_input;
+    private $user;
+
     /**
      * Create a new message instance.
      */
