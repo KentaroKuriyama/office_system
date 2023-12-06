@@ -21,14 +21,16 @@ class UsersTableSeeder extends Seeder
                 'email'     => Str::random(10).'@abc.com',
                 'password'  => Hash::make('asdfghjk'),
                 'login_id'  => 'hoge',
-                'role_id'   => 1
+                'role_id'   => 1,
+                'created_at' => '2024-01-01 00:00:00'
             ],
             [
                 'name' => '遠藤次郎',
                 'email'     => Str::random(10).'@abc.com',
                 'password'  => Hash::make('asdfghjk'),
                 'login_id'  => 'age',
-                'role_id'   => 2
+                'role_id'   => 2,
+                'created_at' => '2024-01-01 00:00:00'
             ],
         ]);
     }

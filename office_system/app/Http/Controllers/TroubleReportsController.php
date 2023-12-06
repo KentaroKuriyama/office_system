@@ -104,7 +104,7 @@ class TroubleReportsController extends Controller
             'register_type' => 1,
             'status' => 1,
             'create_user' => $user->id,
-            'created_at' => date('Y-m-d H:i:s'),
+            'created_at' => now(),
             'updated_at' => null
         ]);
         $trouble->save();

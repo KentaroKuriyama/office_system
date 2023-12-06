@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name') }} | ユーザ一覧</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -54,7 +54,7 @@
                             </li>
                             @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
                                 <li class="nav-item">
-                                    <a class="nav-link"  href="{{ route('admin.user.index') }}">機能管理</a>
+                                    <a class="nav-link"  href="{{ route('admin.user.index') }}">ユーザ管理</a>
                                 </li>
                             @endif
                             <li class="nav-item dropdown">

@@ -30,6 +30,11 @@ class Trouble extends Model
         'deleted_at'
     ];
 
+    /**
+     * 障害報告内容をDBに保存する際の制限
+     *
+     * @return void
+     */
     public function setTroubleReportFillable()
     {
         $this->fillable = [
