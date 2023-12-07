@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedInteger('role_id')->default(99)->after('name');
+            $table->timestamp('deleted_at')->nullable()->after('updated_at');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role_id');
+            $table->dropColumn('deleted_at');
         });
     }
 };

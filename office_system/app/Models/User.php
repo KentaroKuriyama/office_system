@@ -26,13 +26,14 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function setUserManagement()
+    public function setUserManagementFillable()
     {
         return $this->fillable = [
             'name',
             'login_id',
             'email',
             'password',
+            'role_id',
             'created_at',
             'updated_at'
         ];

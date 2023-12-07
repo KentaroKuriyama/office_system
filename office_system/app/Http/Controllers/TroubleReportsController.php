@@ -49,7 +49,6 @@ class TroubleReportsController extends Controller
                 ->withErrors($validator);
         }
 
-        // 第一引数をキーとしてセッション変数にフォームの入力値を保存
         $request->session()->put('trouble_input', $input);
 
         return redirect()->action([TroubleReportsController::class, 'reportConfirm']);

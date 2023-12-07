@@ -70,8 +70,6 @@ class RegisterController extends Controller
             'login_id' => $data['login_id'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'created_at' => now(),
-            'updated_at' => null
         ]);
     }
 }

@@ -39,7 +39,7 @@ Route::prefix('/admin/user')
         Route::post('/{id}', [USER_MANAGE_PATH, 'userDelete'])->name('delete');
         Route::get('/detail/{id}', [USER_MANAGE_PATH, 'userDetail'])->name('detail');
         Route::get('/create/input', [USER_MANAGE_PATH, 'userCreateInput'])->name('create.input');
-        Route::post('/create/input', [USER_MANAGE_PATH, 'userCreatesend'])->name('create.send');
+        Route::post('/create/input', [USER_MANAGE_PATH, 'userCreateSend'])->name('create.send');
         Route::get('/create/result', [USER_MANAGE_PATH, 'userCreateResult'])->name('create.result');
         Route::get('/edit/input/{id}', [USER_MANAGE_PATH, 'userEditInput'])->name('edit.input');
         Route::post('/edit/input/{id}', [USER_MANAGE_PATH, 'userEditsend'])->name('edit.send');

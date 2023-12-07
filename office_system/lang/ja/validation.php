@@ -212,6 +212,7 @@ return [
         'lesson' => 'レッスン',
         'line_address_1' => '回線アドレス1',
         'line_address_2' => '回線アドレス2',
+        'login_id' => 'ログインID',
         'message' => 'メッセージ',
         'middle_name' => 'ミドルネーム',
         'minute' => '分',
@@ -236,6 +237,7 @@ return [
         'restored_at' => 'で復元',
         'result_text_under_image' => '画像の下の結果テキスト',
         'role' => '役割',
+        'role_id' => '権限',
         'second' => '秒',
         'sex' => '性別',
         'short_text' => '短いテキスト',
@@ -260,6 +262,6 @@ return [
     'values' => [
         'occurred_at' => [
             'now' => '現在時刻'
-        ]
+        ],
     ],
 ];
