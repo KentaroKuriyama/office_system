@@ -17,7 +17,7 @@
                             <h2 class="text-center text-primary">ユーザ情報の編集が完了しました。</h2>
                             <div class="d-flex justify-content-between">
                                 <p><a href="{{ route('admin.user.index') }}" class="m-5 btn btn-success">一覧画面に戻る</a></p>
-                                <p><a href="{{ route('admin.user.create.input', ['id' => $user->id]) }}" class="m-5 btn btn-primary">ユーザ情報を修正する</a></p>
+                                <p><a href="{{ route('admin.user.edit.input', ['id' => $user->id]) }}" class="m-5 btn btn-primary">ユーザ情報を修正する</a></p>
                             </div>
                         </div>
                     </div>

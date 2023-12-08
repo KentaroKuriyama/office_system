@@ -50,13 +50,14 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('admin.user.edit.input', ['id' => $user->id]) }}">
-                                        <button type="submit" class="btn btn-secondary">編集</button>
+                                        <button type="submit" class="btn btn-primary">編集</button>
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.user.delete', ['id' => $user->id]) }}">
-                                        <button type="submit" class="btn btn-secondary">削除</button>
-                                    </a>
+                                    <form action="{{ route('admin.user.delete', ['id' => $user->id]) }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('本当に削除しますか？');">削除</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

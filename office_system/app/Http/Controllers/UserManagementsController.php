@@ -17,7 +17,7 @@ class UserManagementsController extends Controller
 
     private $validator = [
         'name' => 'required|string|max:50',
-        'login_id' => 'required|string|max:50',
+        'login_id' => 'required|string|max:50|unique:users',
         'email' => 'required|string|email:filter|unique:users',
         'password' => 'required|string|between:8, 50|unique:users',
         'role_id' => 'required'
@@ -25,7 +25,7 @@ class UserManagementsController extends Controller
 
     public function userIndex()
     {
-        $users = User::orderBy('id', 'desc')->get();
+        $users = User::where('deleted_at', null)->orderBy('id', 'desc')->get();
 
         return view('admin.user.index', ['users' => $users]);
     }
@@ -116,19 +116,27 @@ class UserManagementsController extends Controller
     {
         $input = $request->only($this->formItems);
         $user = User::find($id);
-        // 動的にルートパラメータを取得
-        $userId = $request->route('user');
 
         $validator = Validator::make($input, [
             'name' => 'required|string|max:50',
-            'login_id' => 'required|string|max:50',
+            'login_id' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::unique('users')->ignore($id, 'id'),
+            ],
             'email' => [
                 'required',
                 'string',
                 'email:filter',
                 Rule::unique('users')->ignore($id, 'id'),
             ],
-            'password' => 'required|string|between:8, 50|unique:users',
+            'password' => [
+                'required',
+                'string',
+                'between:8, 50',
+                Rule::unique('users')->ignore($id, 'id'),
+            ],
             'role_id' => 'required',
         ]);
 
@@ -145,14 +153,13 @@ class UserManagementsController extends Controller
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'role_id' => $input['role_id'],
-            'created_at' => null,
             'updated_at' => now()
         ]);
         $user->save();
 
         if ($user->save()) {
             $request->session()->put('user_input', $input);
-            return redirect()->action([UserManagementsController::class, 'userEditResult']);
+            return redirect()->action([UserManagementsController::class, 'userEditResult'], ['id' => $user->id]);
         } else {
             return redirect()->action([UserManagementsController::class, 'userEditInput'])
                 ->with('error', 'ユーザの編集に失敗しました。もう一度やり直してください');
@@ -170,10 +177,19 @@ class UserManagementsController extends Controller
         }
 
         $request->session()->forget('user_input');
-        return view('admin.user.edit.result', ['id' => $user->id]);
+        return view('admin.user.edit.result', ['id' => $user->id, 'user' => $user]);
     }
 
-    public function userDelete()
+    public function userDelete($id)
     {
+        $user = User::find($id);
+        if (!$user) {
+            return redirect()->action([UserManagementsController::class, 'userIndex'])
+            ->with('error', 'ユーザが見つかりませんでした。');
+        }
+
+        $user->delete();
+        return redirect()->action([UserManagementsController::class, 'userIndex'])
+        ->with('delete', 'ユーザの削除が完了しました。');
     }
 }
