@@ -22,10 +22,13 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'login_id' => $this->faker->unique()->regexify('[A-Za-z0-9]{10}'),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => static::$password ??= Hash::make('asdfghjk'),
             'remember_token' => Str::random(10),
+            'role_id' => $this->faker->randomElement([1, 2, 99]),
+            'created_at' => now(),
         ];
     }
 

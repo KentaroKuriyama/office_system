@@ -4,6 +4,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{{ config('app.name') }} | ユーザ一覧</title>
+        <style>
+            th a {
+                text-decoration: none;
+            }
+        </style>
     </head>
     <body>
         @extends('layouts.app')
@@ -22,13 +27,13 @@
                     @endif
                 <table class="table table-bordered table-striped task-table table-hover">
                     <thead>
-                        <tr class="bg-dark text-light">
-                            <th>ID</th>
-                            <th>ユーザ名</th>
-                            <th>権限</th>
-                            <th>メールアドレス</th>
-                            <th>作成日時</th>
-                            <th>更新日時</th>
+                        <tr class="bg-dark text-light text-center">
+                            <th class="sort">@sortablelink('id', 'ID')</th>
+                            <th class="sort">@sortablelink('name', 'ユーザ名')</th>
+                            <th class="sort">@sortablelink('role_id', '権限')</th>
+                            <th class="sort">@sortablelink('email', 'メールアドレス')</th>
+                            <th class="sort">@sortablelink('created_at', '作成日時')</th>
+                            <th class="sort">@sortablelink('updated_at', '更新日時')</th>
                             <th>詳細</th>
                             <th>編集</th>
                             <th>削除</th>
@@ -36,13 +41,13 @@
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
-                            <tr>
+                            <tr class="text-center align-middle">
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->name }}</a></td>
                                 <td>{{ $user->role->name}}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->created_at }}</td>
-                                <td>{{ $user->updated_at }}</td>
+                                <td>{{ \Carbon\Carbon::parse($user->created_at)->format('Y年m月d日') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($user->updated_at)->format('Y年m月d日') }}</td>
                                 <td>
                                     <a href="{{ route('admin.user.detail', ['id' => $user->id]) }}">
                                         <button type="submit" class="btn btn-secondary">詳細</button>
@@ -63,6 +68,9 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+            <div class="d-flex justify-content-center">
+                {{$users->links()}}
             </div>
         @endsection
     </body>

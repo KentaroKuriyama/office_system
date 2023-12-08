@@ -25,7 +25,7 @@ class UserManagementsController extends Controller
 
     public function userIndex()
     {
-        $users = User::where('deleted_at', null)->orderBy('id', 'desc')->get();
+        $users = User::where('deleted_at', null)->sortable()->orderBy('id', 'desc')->paginate(20);
 
         return view('admin.user.index', ['users' => $users]);
     }
