@@ -85,6 +85,7 @@ class TroubleReportsController extends Controller
         // 管理者を取得する
         // $admins = User::where('role_id', 1)
         //         ->orwhere('role_id', 2)
+        //         ->where('deleted_at', null)
         //         ->get();
         $request->session()->regenerateToken();
 
