@@ -101,8 +101,9 @@ class TroubleReportsController extends Controller
             'occurred_at' => $input['occurred_at'],
             'phenomenon' => $input['phenomenon'],
             'reproduction_steps' => $input['reproduction_steps'],
-            'register_type' => 1,
+            'priprity' => 3,
             'status' => 1,
+            'register_type' => 1,
             'create_user' => $user->id,
             'created_at' => now(),
             'updated_at' => null

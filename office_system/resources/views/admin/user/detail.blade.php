@@ -15,24 +15,34 @@
                             <h2 class="fs-1 mb-5 text-center fw-bold">ユーザ詳細一覧</h2>
                             <p>編集を行いたい場合、編集するを押してください</p>
                             @csrf
-                            <div class="mb-4">
-                                <h5><b>名前：{{$user->name}}</b></h5>
-                            </div>
-                            <div class="mb-4">
-                                <h5><b>ログインID：{{$user->login_id}}</b></h5>
-                            </div>
-                            <div class="mb-4">
-                                <h5><b>権限：{{$user->role->name}}</b></h5>
-                            </div>
-                            <div class="mb-4">
-                                <h5><b>メールアドレス：{{$user->email}}</b></h5>
-                            </div>
-                            <div class="mb-4">
-                                <h5><b>作成日：{{ $createdAt != null ? $createdAt->format('Y年m月d日') : 'デフォルトデータです'}}</b></h5>
-                            </div>
-                            <div class="mb-4">
-                                <h5><b>更新日：{{ $updatedAt != null ? $updatedAt->format('Y年m月d日') : 'まだ更新されていません'}}</b></h5>
-                            </div>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>名前</th>
+                                        <td>{{$user->name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>ログインID</th>
+                                        <td>{{$user->login_id}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>権限</th>
+                                        <td>{{$user->role->name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>メールアドレス</th>
+                                        <td>{{$user->email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>作成日</th>
+                                        <td>{{ $createdAt != null ? $createdAt->format('Y年m月d日') : 'デフォルトデータです'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>更新日</th>
+                                        <td>{{ $updatedAt != null ? $updatedAt->format('Y年m月d日') : 'まだ更新されていません'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             <div class="d-flex justify-content-between mb-4">
                                 <div class="text-center col-md-6 mb-3">
                                     <a href="{{ route('admin.user.edit.input', ['id' => $user->id]) }}"><button type="submit" class="btn btn-primary">編集する</button></a>

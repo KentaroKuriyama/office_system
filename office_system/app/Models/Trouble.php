@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Kyslik\ColumnSortable\Sortable;
 
 class Trouble extends Model
 {
     use HasFactory;
     use Sortable;
+    use SoftDeletes;
 
     protected $fillable = [
         'function',
@@ -53,4 +55,8 @@ class Trouble extends Model
         ];
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'corresponding_user_id', 'id');
+    }
 }

@@ -58,6 +58,11 @@
                                     <a class="nav-link"  href="{{ route('admin.user.index') }}">ユーザ管理</a>
                                 </li>
                             @endif
+                            @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                                <li class="nav-item">
+                                    <a class="nav-link"  href="{{ route('admin.trouble.index') }}">機能管理</a>
+                                </li>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 const TROUBLE_REQUEST_PATH = App\Http\Controllers\TroubleReportsController::class;
 const USER_MANAGE_PATH = App\Http\Controllers\UserManagementsController::class;
+const TROUBLE_MANAGE_PATH = App\Http\Controllers\TroubleManagementsController::class;
 
 Auth::routes();
 
@@ -44,4 +45,19 @@ Route::prefix('/admin/user')
         Route::get('/edit/input/{id}', [USER_MANAGE_PATH, 'userEditInput'])->name('edit.input');
         Route::post('/edit/input/{id}', [USER_MANAGE_PATH, 'userEditsend'])->name('edit.send');
         Route::get('/edit/result/{id}', [USER_MANAGE_PATH, 'userEditResult'])->name('edit.result');
+    });
+
+Route::prefix('/admin/trouble')
+    ->middleware('auth', 'adminAuth')
+    ->name('admin.trouble.')
+    ->group(function () {
+        Route::get('/', [TROUBLE_MANAGE_PATH, 'troubleIndex'])->name('index');
+        Route::post('/{id}', [TROUBLE_MANAGE_PATH, 'troubleDelete'])->name('delete');
+        Route::get('/detail/{id}', [TROUBLE_MANAGE_PATH, 'troubleDetail'])->name('detail');
+        Route::get('/create/input', [TROUBLE_MANAGE_PATH, 'troubleCreateInput'])->name('create.input');
+        Route::post('/create/input', [TROUBLE_MANAGE_PATH, 'troubleCreateSend'])->name('create.send');
+        Route::get('/create/result', [TROUBLE_MANAGE_PATH, 'troubleCreateResult'])->name('create.result');
+        Route::get('/edit/input/{id}', [TROUBLE_MANAGE_PATH, 'troubleEditInput'])->name('edit.input');
+        Route::post('/edit/input/{id}', [TROUBLE_MANAGE_PATH, 'troubleEditsend'])->name('edit.send');
+        Route::get('/edit/result/{id}', [TROUBLE_MANAGE_PATH, 'troubleEditResult'])->name('edit.result');
     });
