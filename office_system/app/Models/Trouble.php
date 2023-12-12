@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Trouble extends Model
 {
     use HasFactory;
+    use Sortable;
 
     protected $fillable = [
         'function',
@@ -30,6 +32,11 @@ class Trouble extends Model
         'deleted_at'
     ];
 
+    /**
+     * 障害報告内容をDBに保存する際の制限
+     *
+     * @return void
+     */
     public function setTroubleReportFillable()
     {
         $this->fillable = [
