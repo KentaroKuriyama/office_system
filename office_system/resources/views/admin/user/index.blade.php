@@ -4,11 +4,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{{ config('app.name') }} | ユーザ一覧</title>
-        <style>
-            th a {
-                text-decoration: none;
-            }
-        </style>
     </head>
     <body>
         @extends('layouts.app')
@@ -28,12 +23,12 @@
                 <table class="table table-bordered table-striped task-table table-hover">
                     <thead>
                         <tr class="bg-dark text-light text-center">
-                            <th class="sort">@sortablelink('id', 'ID')</th>
-                            <th class="sort">@sortablelink('name', 'ユーザ名')</th>
-                            <th class="sort">@sortablelink('role_id', '権限')</th>
-                            <th class="sort">@sortablelink('email', 'メールアドレス')</th>
-                            <th class="sort">@sortablelink('created_at', '作成日時')</th>
-                            <th class="sort">@sortablelink('updated_at', '更新日時')</th>
+                            <th>@sortablelink('id', 'ID')</th>
+                            <th>@sortablelink('name', 'ユーザ名')</th>
+                            <th>@sortablelink('role_id', '権限')</th>
+                            <th>@sortablelink('email', 'メールアドレス')</th>
+                            <th>@sortablelink('created_at', '作成日時')</th>
+                            <th>@sortablelink('updated_at', '更新日時')</th>
                             <th>詳細</th>
                             <th>編集</th>
                             <th>削除</th>

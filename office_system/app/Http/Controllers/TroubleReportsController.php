@@ -82,9 +82,9 @@ class TroubleReportsController extends Controller
         $input = $request->session()->get('trouble_input');
         $user = User::find(Auth::user()->id);
         // 管理者を取得する
-        // $admins = User::where('role_id', 1)
-        //         ->orwhere('role_id', 2)
-        //         ->get();
+        $admins = User::where('role_id', 1)
+                ->orwhere('role_id', 2)
+                ->get();
         $request->session()->regenerateToken();
 
         // 戻るボタンが押されたら入力値と共にフォームにへ戻る
@@ -111,9 +111,9 @@ class TroubleReportsController extends Controller
         if ($trouble->save()) {
             $mailer->to($user->email)->send(new troubleReport($input, $user));
             // 管理者全員にメールを送信する
-            // foreach ($admins as $admin) {
-            //     $mailer->to($admin->email)->send(new troubleReportForAdmin($input));
-            // }
+            foreach ($admins as $admin) {
+                $mailer->to($admin->email)->send(new troubleReportForAdmin($input));
+            }
             return redirect()->action([TroubleReportsController::class, 'reportResult']);
         } else {
             return redirect()->action([TroubleReportsController::class, 'reportInput'])->with('error', 'メールの送信に失敗しました。もう一度やり直してください');
