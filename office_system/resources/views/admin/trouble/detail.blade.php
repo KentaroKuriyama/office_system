@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{ config('app.name') }} | 障害詳細</title>
+        <title>{{config('app.name')}} | 障害詳細</title>
     </head>
     <body>
         @extends('layouts.app')
@@ -27,35 +27,35 @@
                                 </tr>
                                 <tr>
                                     <th>発生日時</th>
-                                    <td>{{$trouble->occured_at}}</td>
+                                    <td>{{\Carbon\Carbon::parse($trouble->created_at)->format('Y年m月d日')}}</td>
                                 </tr>
                                 <tr>
                                     <th>現象</th>
-                                    <td>{!! nl2br(e($trouble->phenomenon)) !!}</td>
+                                    <td>{!!nl2br(e($trouble->phenomenon))!!}</td>
                                 </tr>
                                 <tr>
                                     <th>再現手順</th>
-                                    <td>{!! nl2br(e($trouble->reproduction_steps)) !!}</td>
+                                    <td>{!!nl2br(e($trouble->reproduction_steps))!!}</td>
                                 </tr>
                                 <tr>
                                     <th>原因</th>
-                                    <td>{!! nl2br(e($trouble->cause)) !!}</td>
+                                    <td>{!!!empty($trouble->cause) ? nl2br(e($trouble->cause)) : ''!!}</td>
                                 </tr>
                                 <tr>
                                     <th>原因種別</th>
-                                    <td>{{config('const.trouble.cause_type')[$trouble->cause_type]}}</td>
+                                    <td>{{!empty($trouble->cause_type) ? config('const.trouble.cause_type')[$trouble->cause_type] : ''}}</td>
                                 </tr>
                                 <tr>
                                     <th>原因工程</th>
-                                    <td>{{config('const.trouble.cause_process')[$trouble->cause_process]}}</td>
+                                    <td>{{!empty($trouble->cause_process) ? config('const.trouble.cause_process')[$trouble->cause_process] : ''}}</td>
                                 </tr>
                                 <tr>
                                     <th>担当者</th>
-                                    <td>{{$trouble->user->name}}</td>
+                                    <td>{{!empty($trouble->user->name) ? $trouble->user->name : ''}}</td>
                                 </tr>
                                 <tr>
                                     <th>対応期限</th>
-                                    <td>{{$trouble->corresponding_limit}}</td>
+                                    <td>{{!empty($trouble->corresponding_limit) ? $trouble->corresponding_limit : ''}}</td>
                                 </tr>
                                 <tr>
                                     <th>優先度</th>
@@ -63,7 +63,7 @@
                                 </tr>
                                 <tr>
                                     <th>備考</th>
-                                    <td>{!! nl2br(e($trouble->remarks)) !!}</td>
+                                    <td>{!!!empty($trouble->remarks) ? nl2br(e($trouble->remarks)) : ''!!}</td>
                                 </tr>
                                 <tr>
                                     <th>ステータス</th>
@@ -83,20 +83,20 @@
                                 </tr>
                                 <tr>
                                     <th>作成日時</th>
-                                    <td>{{ !empty($trouble->created_at) ? \Carbon\Carbon::parse($trouble->created_at)->format('Y年m月d日') : ''}}</td>
+                                    <td>{{!empty($trouble->created_at) ? \Carbon\Carbon::parse($trouble->created_at)->format('Y年m月d日') : ''}}</td>
                                 </tr>
                                 <tr>
                                     <th>更新日時</th>
-                                    <td>{{ !empty($trouble->created_at) ? \Carbon\Carbon::parse($trouble->updated_at)->format('Y年m月d日') : ''}}</td>
+                                    <td>{{!empty($trouble->created_at) ? \Carbon\Carbon::parse($trouble->updated_at)->format('Y年m月d日') : ''}}</td>
                                 </tr>
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-between mb-4">
                             <div class="text-center col-md-6 mb-3">
-                                <a href="{{ route('admin.trouble.edit.input', ['id' => $trouble->id]) }}"><button type="submit" class="btn btn-primary">編集する</button></a>
+                                <a href="{{route('admin.trouble.edit.input', ['id' => $trouble->id])}}"><button type="submit" class="btn btn-primary">編集する</button></a>
                             </div>
                             <div class="text-center col-md-6 mb-3">
-                                <a href="{{ route('admin.trouble.index') }}"><button type="submit" class="btn btn-success">一覧に戻る</button></a>
+                                <a href="{{route('admin.trouble.index')}}"><button type="submit" class="btn btn-success">一覧に戻る</button></a>
                             </div>
                         </div>
                     </div>

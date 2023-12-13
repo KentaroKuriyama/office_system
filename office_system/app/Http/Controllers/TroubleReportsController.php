@@ -16,7 +16,7 @@ class TroubleReportsController extends Controller
     private $formItems = ['function', 'occurred_at', 'phenomenon', 'reproduction_steps'];
 
     private $validator = [
-        'function' => 'required',
+        'function' => 'required|numeric',
         'occurred_at' => 'required|date|before_or_equal:now',
         'phenomenon' => 'required|string|between:20, 10000',
         'reproduction_steps' => 'required|string|between:20, 10000'
@@ -101,7 +101,7 @@ class TroubleReportsController extends Controller
             'occurred_at' => $input['occurred_at'],
             'phenomenon' => $input['phenomenon'],
             'reproduction_steps' => $input['reproduction_steps'],
-            'priprity' => 3,
+            'priority' => 3,
             'status' => 1,
             'register_type' => 1,
             'create_user' => $user->id,

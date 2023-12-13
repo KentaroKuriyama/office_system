@@ -20,7 +20,7 @@ class UserManagementsController extends Controller
         'login_id' => 'required|string|max:50|unique:users',
         'email' => 'required|string|email:filter|unique:users',
         'password' => 'required|string|between:8, 50|unique:users',
-        'role_id' => 'required'
+        'role_id' => 'required|numeric'
     ];
 
     public function userIndex()
@@ -116,6 +116,7 @@ class UserManagementsController extends Controller
     {
         $input = $request->only($this->formItems);
         $user = User::find($id);
+        $request->session()->regenerateToken();
 
         $validator = Validator::make($input, [
             'name' => 'required|string|max:50',
