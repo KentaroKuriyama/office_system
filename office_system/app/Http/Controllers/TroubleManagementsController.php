@@ -84,7 +84,7 @@ class TroubleManagementsController extends Controller
 
         if (empty($pass)) {
             return redirect()->action([TroubleManagementsController::class, 'troubleIndex'])
-            ->with('error', '障害報告は一覧の障害を登録するボタンからしてください');
+            ->with('error', 'ブラウザバックによって遷移されました。操作をやり直してください。');
         }
 
         return view('admin.trouble.create.input', ['admins' => $admins]);
@@ -111,7 +111,7 @@ class TroubleManagementsController extends Controller
             'cause_type' => $input['cause_type'],
             'cause_process' => $input['cause_process'],
             'corresponding_limit' => $input['corresponding_limit'],
-            'corresponding_limit' => $input['corresponding_limit'],
+            'corresponding_user_id' => $input['corresponding_user_id'],
             'priority' => $input['priority'],
             'remarks' => $input['remarks'],
             'status' => 1,
@@ -152,17 +152,61 @@ class TroubleManagementsController extends Controller
         ->where('deleted_at', null)
         ->get();
 
-        return view('admin.trouble.edit.input');
+        return view('admin.trouble.edit.input', ['trouble' => $trouble, 'admins' => $admins]);
     }
 
     public function troubleEditsend(Request $request, $id)
     {
+        $this->formItems[] = 'status';
+        $input = $request->only($this->formItems);
+        $trouble = Trouble::find($id);
+        $validator = Validator::make($input, $this->validator);
+        $request->session()->regenerateToken();
 
+        if ($validator->fails()) {
+            return redirect()->action([TroubleManagementsController::class, 'troubleCreateInput'], ['id' => $trouble->id])
+                ->withInput()
+                ->withErrors($validator);
+        }
+
+        $trouble->update([
+            'function' => $input['function'],
+            'occurred_at' => $input['occurred_at'],
+            'phenomenon' => $input['phenomenon'],
+            'reproduction_steps' => $input['reproduction_steps'],
+            'cause' => $input['cause'],
+            'cause_type' => $input['cause_type'],
+            'cause_process' => $input['cause_process'],
+            'corresponding_limit' => $input['corresponding_limit'],
+            'corresponding_user_id' => $input['corresponding_user_id'],
+            'priority' => $input['priority'],
+            'remarks' => $input['remarks'],
+            'status' => $input['status'],
+            'update_user' => Auth::user()->id,
+        ]);
+
+        if ($trouble) {
+            $request->session()->put('trouble_input', $input);
+            $request->session()->forget('pass');
+            return redirect()->action([TroubleManagementsController::class, 'troubleEditResult'], ['id' => $trouble->id]);
+        } else {
+            return redirect()->action([TroubleManagementsController::class, 'troubleEditInput'])
+                ->with('error', '障害の登録に失敗しました。もう一度やり直してください');
+        }
     }
 
     public function troubleEditResult(Request $request, $id)
     {
+        $input = $request->session()->get('trouble_input');
+        $trouble = Trouble::find($id);
 
+        if (empty($input)) {
+            return redirect()->action([TroubleManagementsController::class, 'troubleIndex'])
+                ->with('error', '不正な遷移です');
+        }
+
+        $request->session()->forget('trouble_input');
+        return view('admin.trouble.edit.result', ['id' => $id, 'trouble' => $trouble]);
     }
 
 }

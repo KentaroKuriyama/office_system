@@ -37,13 +37,13 @@ Route::prefix('/admin/user')
     ->name('admin.user.')
     ->group(function () {
         Route::get('/', [USER_MANAGE_PATH, 'userIndex'])->name('index');
-        Route::post('/{id}', [USER_MANAGE_PATH, 'userDelete'])->name('delete');
+        Route::delete('/{id}', [USER_MANAGE_PATH, 'userDelete'])->name('delete');
         Route::get('/detail/{id}', [USER_MANAGE_PATH, 'userDetail'])->name('detail');
         Route::get('/create/input', [USER_MANAGE_PATH, 'userCreateInput'])->name('create.input');
         Route::post('/create/input', [USER_MANAGE_PATH, 'userCreateSend'])->name('create.send');
         Route::get('/create/result', [USER_MANAGE_PATH, 'userCreateResult'])->name('create.result');
         Route::get('/edit/input/{id}', [USER_MANAGE_PATH, 'userEditInput'])->name('edit.input');
-        Route::post('/edit/input/{id}', [USER_MANAGE_PATH, 'userEditsend'])->name('edit.send');
+        Route::put('/edit/input/{id}', [USER_MANAGE_PATH, 'userEditsend'])->name('edit.send');
         Route::get('/edit/result/{id}', [USER_MANAGE_PATH, 'userEditResult'])->name('edit.result');
     });
 
@@ -52,12 +52,12 @@ Route::prefix('/admin/trouble')
     ->name('admin.trouble.')
     ->group(function () {
         Route::get('/', [TROUBLE_MANAGE_PATH, 'troubleIndex'])->name('index');
-        Route::post('/{id}', [TROUBLE_MANAGE_PATH, 'troubleDelete'])->name('delete');
+        Route::delete('/{id}', [TROUBLE_MANAGE_PATH, 'troubleDelete'])->name('delete');
         Route::get('/detail/{id}', [TROUBLE_MANAGE_PATH, 'troubleDetail'])->name('detail');
         Route::get('/create/input', [TROUBLE_MANAGE_PATH, 'troubleCreateInput'])->name('create.input');
         Route::post('/create/input', [TROUBLE_MANAGE_PATH, 'troubleCreateSend'])->name('create.send');
         Route::get('/create/result', [TROUBLE_MANAGE_PATH, 'troubleCreateResult'])->name('create.result');
         Route::get('/edit/input/{id}', [TROUBLE_MANAGE_PATH, 'troubleEditInput'])->name('edit.input');
-        Route::post('/edit/input/{id}', [TROUBLE_MANAGE_PATH, 'troubleEditsend'])->name('edit.send');
+        Route::put('/edit/input/{id}', [TROUBLE_MANAGE_PATH, 'troubleEditsend'])->name('edit.send');
         Route::get('/edit/result/{id}', [TROUBLE_MANAGE_PATH, 'troubleEditResult'])->name('edit.result');
     });

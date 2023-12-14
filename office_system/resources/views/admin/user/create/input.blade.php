@@ -61,7 +61,7 @@
                                     </select>
                                 </div>
                                 <div class="text-center pt-4 col-md-6 offset-md-3">
-                                    <button type="submit" class="btn btn-primary">登録する</button>
+                                    <button type="submit" class="btn btn-primary submit">登録する</button>
                                 </div>
                             </form>
                         </div>

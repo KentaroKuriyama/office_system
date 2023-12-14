@@ -19,8 +19,9 @@
                                 </div>
                             @endif
                             <p>以下の項目に必要事項を入力してください</p>
-                            <form method="post" action="{{route('admin.trouble.create.send')}}">
+                            <form method="post" action="{{route('admin.trouble.edit.send', ['id' => $trouble->id])}}">
                                 @csrf
+                                @method('put')
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <h5><b>機能</b></h5>
@@ -29,7 +30,7 @@
                                         @enderror
                                         <select name="function" class="form-control">
                                             @foreach(config('const.trouble.function') as $key => $value)
-                                                <option value="{{$key}}" {{old('function') == $key ? 'selected' : ''}}>{{$value}}</option>
+                                                <option value="{{$key}}" {{old('function', $trouble) == $key ? 'selected' : ''}}>{{$value}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -38,7 +39,7 @@
                                         @error('occurred_at')
                                             <b><span class="text-danger">・{{$message}}</span></b>
                                         @enderror
-                                        <input type="datetime-local" name="occurred_at" class="form-control" value="{{old('occurred_at')}}">
+                                        <input type="datetime-local" name="occurred_at" class="form-control" value="{{old('occurred_at', $trouble)}}">
                                     </div>
                                 </div>
                                 <div class="mb-4">
@@ -46,21 +47,21 @@
                                     @error('phenomenon')
                                         <b><span class="text-danger">・{{$message}}</span></b>
                                     @enderror
-                                    <textarea class="form-control" name="phenomenon" rows="5">{{old('phenomenon')}}</textarea>
+                                    <textarea class="form-control" name="phenomenon" rows="5">{{old('phenomenon', $trouble)}}</textarea>
                                 </div>
                                 <div class="mb-4">
                                     <h5><b>再現手順</b></h5>
                                     @error('reproduction_steps')
                                         <b><span class="text-danger">・{{$message}}</span></b>
                                     @enderror
-                                    <textarea class="form-control" name="reproduction_steps" rows="5">{{old('reproduction_steps')}}</textarea>
+                                    <textarea class="form-control" name="reproduction_steps" rows="5">{{old('reproduction_steps', $trouble)}}</textarea>
                                 </div>
                                 <div class="mb-4">
                                     <h5><b>原因</b></h5>
                                     @error('cause')
                                         <b><span class="text-danger">・{{$message}}</span></b>
                                     @enderror
-                                    <textarea class="form-control" name="cause" rows="5">{{old('cause')}}</textarea>
+                                    <textarea class="form-control" name="cause" rows="5">{{old('cause', $trouble)}}</textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
@@ -69,9 +70,9 @@
                                             <b><span class="text-danger">・{{$message}}</span></b>
                                         @enderror
                                         <select name="cause_type" class="form-control">
-                                            <option value="" {{old('cause_type') == '' ? 'selected' : ''}}>選択しない</option>
+                                            <option value="" {{old('cause_type', $trouble) == '' ? 'selected' : ''}}>選択しない</option>
                                             @foreach(config('const.trouble.cause_type') as $key => $value)
-                                                <option value="{{$key}}" {{old('cause_type') == $key ? 'selected' : ''}}>{{$value}}</option>
+                                                <option value="{{$key}}" {{old('cause_type', $trouble) == $key ? 'selected' : ''}}>{{$value}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -81,9 +82,9 @@
                                             <b><span class="text-danger">・{{$message}}</span></b>
                                         @enderror
                                         <select name="cause_process" class="form-control">
-                                            <option value="" {{old('cause_process') == '' ? 'selected' : ''}}>選択しない</option>
+                                            <option value="" {{old('cause_process', $trouble) == '' ? 'selected' : ''}}>選択しない</option>
                                             @foreach(config('const.trouble.cause_process') as $key => $value)
-                                                <option value="{{$key}}" {{old('cause_process') == $key ? 'selected' : ''}}>{{$value}}</option>
+                                                <option value="{{$key}}" {{old('cause_process', $trouble) == $key ? 'selected' : ''}}>{{$value}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -95,9 +96,9 @@
                                             <b><span class="text-danger">・{{$message}}</span></b>
                                         @enderror
                                         <select name="corresponding_user_id" class="form-control">
-                                            <option value="" {{old('corresponding_user_id') == '' ? 'selected' : ''}}>まだ決まっていない</option>
+                                            <option value="" {{old('corresponding_user_id', $trouble) == '' ? 'selected' : ''}}>まだ決まっていない</option>
                                             @foreach($admins as $admin)
-                                                <option value="{{$admin->id}}" {{old('corresponding_user_id') == $admin->id ? 'selected' : ''}}>{{$admin->name}}</option>
+                                                <option value="{{$admin->id}}" {{old('corresponding_user_id', $trouble) == $admin->id ? 'selected' : ''}}>{{$admin->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -106,26 +107,39 @@
                                         @error('corresponding_limit')
                                             <b><span class="text-danger">・{{$message}}</span></b>
                                         @enderror
-                                        <input type="date" class="form-control" name="corresponding_limit" value="{{old('corresponding_limit')}}">
+                                        <input type="date" class="form-control" name="corresponding_limit" value="{{old('corresponding_limit', $trouble)}}">
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <h5><b>優先度</b></h5>
-                                    @error('priority')
-                                        <b><span class="text-danger">・{{$message}}</span></b>
-                                    @enderror
-                                    <select name="priority" class="form-control">
-                                        @foreach(config('const.trouble.priority') as $key => $value)
-                                            <option value="{{$key}}" {{old('priority') == $key ? 'selected' : ''}}>{{$value}}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <h5><b>優先度</b></h5>
+                                        @error('priority')
+                                            <b><span class="text-danger">・{{$message}}</span></b>
+                                        @enderror
+                                        <select name="priority" class="form-control">
+                                            @foreach(config('const.trouble.priority') as $key => $value)
+                                                <option value="{{$key}}" {{old('priority', $trouble) == $key ? 'selected' : ''}}>{{$value}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <h5><b>ステータス</b></h5>
+                                        @error('status')
+                                            <b><span class="text-danger">・{{$message}}</span></b>
+                                        @enderror
+                                        <select name="status" class="form-control">
+                                            @foreach(config('const.trouble.status') as $key => $value)
+                                                <option value="{{$key}}" {{old('status', $trouble) == $key ? 'selected' : ''}}>{{$value}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="mb-4">
                                     <h5><b>備考</b></h5>
                                     @error('remarks')
                                         <b><span class="text-danger">・{{$message}}</span></b>
                                     @enderror
-                                    <textarea class="form-control" name="remarks" rows="5">{{old('remarks')}}</textarea>
+                                    <textarea class="form-control" name="remarks" rows="5">{{old('remarks', $trouble)}}</textarea>
                                 </div>
                                 <div class="text-center pt-4 col-md-6 offset-md-3">
                                     <button type="submit" class="btn btn-primary submit">障害を登録する</button>
