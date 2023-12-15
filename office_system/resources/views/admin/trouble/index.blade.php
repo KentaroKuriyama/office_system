@@ -11,7 +11,11 @@
             <div class="container">
                 <a href="{{route('admin.trouble.create.input')}}" class="btn btn-primary">障害を登録する</a>
                 <h1 style="padding-top:50px;">障害一覧</h1>
-                @if (session('delete'))
+                @if (session('success'))
+                    <div class="alert alert-primary text-center fw-bold delete-message" data-timeout="3000">
+                        {{ session('success') }}
+                    </div>
+                @elseif (session('delete'))
                     <div class="alert alert-success text-center fw-bold delete-message" data-timeout="3000">
                         {{ session('delete') }}
                     </div>
@@ -19,6 +23,7 @@
                     <div class="alert alert-danger text-center fw-bold error-message" data-timeout="3000">
                         {{ session('error') }}
                     </div>
+
                 @endif
                 <table class="table table-bordered table-striped task-table table-hover">
                     <thead>
@@ -34,6 +39,7 @@
                             <th>@sortablelink('updated_at', '更新日時')</th>
                             <th>詳細</th>
                             <th>編集</th>
+                            <th>メール送信</th>
                             <th>削除</th>
                         </tr>
                     </thead>
@@ -58,6 +64,13 @@
                                     <a href="{{route('admin.trouble.edit.input', ['id' => $trouble->id])}}">
                                         <button type="submit" class="btn btn-primary">編集</button>
                                     </a>
+                                </td>
+                                <td>
+                                    @if ($trouble->register_type == 1)
+                                        <a href="{{route('admin.trouble.mail.send', ['id' => $trouble->id])}}">
+                                            <button type="submit" class="btn btn-primary">メール送信</button>
+                                        </a>
+                                    @endif
                                 </td>
                                 <td>
                                     <form action="{{route('admin.trouble.delete', ['id' => $trouble->id])}}" method="post">

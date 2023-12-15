@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <button type="submit" class="m-5 btn btn-success" name="back">修正する</button>
-                                    <button type="submit" class="m-5 btn btn-primary">送信する</button>
+                                    <button type="submit" class="m-5 btn btn-primary submit">送信する</button>
                                 </div>
                             </form>
                         </div>

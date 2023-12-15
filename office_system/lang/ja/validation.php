@@ -245,7 +245,7 @@ return [
         'state' => '状態',
         'street' => '街',
         'student' => '学生',
-        'subject' => '課題',
+        'subject' => '件名',
         'teacher' => '先生',
         'terms' => '利用規約',
         'test_description' => 'テスト内容',

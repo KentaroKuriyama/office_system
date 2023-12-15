@@ -60,4 +60,6 @@ Route::prefix('/admin/trouble')
         Route::get('/edit/input/{id}', [TROUBLE_MANAGE_PATH, 'troubleEditInput'])->name('edit.input');
         Route::put('/edit/input/{id}', [TROUBLE_MANAGE_PATH, 'troubleEditsend'])->name('edit.send');
         Route::get('/edit/result/{id}', [TROUBLE_MANAGE_PATH, 'troubleEditResult'])->name('edit.result');
+        Route::get('/send/{id}', [TROUBLE_MANAGE_PATH, 'troubleMailSend'])->name('mail.send');
+        Route::post('/send/{id}', [TROUBLE_MANAGE_PATH, 'troubleMailResult'])->name('mail.result');
     });

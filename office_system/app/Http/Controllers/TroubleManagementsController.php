@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Trouble;
 use App\Models\User;
+use App\Mail\troubleReply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Mail\Mailer;
@@ -25,6 +26,11 @@ class TroubleManagementsController extends Controller
         'remarks',
     ];
 
+    private $replyItems = [
+        'subject',
+        'text'
+    ];
+
     private $validator = [
         'function' => 'required|numeric',
         'occurred_at' => 'required|date|before_or_equal:now',
@@ -37,6 +43,11 @@ class TroubleManagementsController extends Controller
         'corresponding_limit' => 'nullable|date',
         'priority' => 'required|numeric',
         'remarks' => 'nullable|string|between:20, 10000',
+    ];
+
+    private $replyValidator = [
+        'subject' => 'required|string|max:20',
+        'text' => 'required|string|between:20,10000'
     ];
 
     public function troubleIndex(Request $request)
@@ -209,4 +220,42 @@ class TroubleManagementsController extends Controller
         return view('admin.trouble.edit.result', ['id' => $id, 'trouble' => $trouble]);
     }
 
+    public function troubleMailSend(Request $request, $id)
+    {
+        $trouble = Trouble::find($id);
+        $pass = $request->session()->get('pass');
+
+        if (empty($pass)) {
+            return redirect()->action([TroubleManagementsController::class, 'troubleIndex'])
+            ->with('error', 'ブラウザバックによって遷移されました。操作をやり直してください。');
+        }
+
+        if ($trouble->register_type !== 1) {
+            return redirect()->action([TroubleManagementsController::class, 'troubleIndex'])
+            ->with('error', '返信メールは登録種別が障害報告の場合のみ可能です');
+        }
+
+        return view('admin.trouble.send', ['trouble' => $trouble]);
+    }
+
+    public function troubleMailResult(Request $request, Mailer $mailer, $id)
+    {
+        $trouble = Trouble::find($id);
+        $user = User::find($trouble->create_user);
+        $input = $request->only($this->replyItems);
+        $replyValidator = Validator::make($input, $this->replyValidator);
+
+        if ($replyValidator->fails()) {
+            return redirect()->action([TroubleManagementsController::class, 'troubleMailSend'], ['id' => $id])
+                ->withInput()
+                ->withErrors($replyValidator);
+        }
+
+        $mailer->to($user->email)->send(new troubleReply($input, $user));
+        $request->session()->regenerateToken();
+
+        $request->session()->forget('pass');
+        return redirect()->action([TroubleManagementsController::class, 'troubleIndex'])
+        ->with('success', 'メールの送信が完了しました');
+    }
 }
