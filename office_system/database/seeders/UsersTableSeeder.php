@@ -16,6 +16,15 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('users')->insert([
+            'name' => 'システム管理者',
+            'login_id' => 'admin',
+            'role_id' => 1,
+            'email' => Str::random(10).'@abc.com',
+            'password' => Hash::make('asdfghjk'),
+            'created_at' => now(),
+        ]);
+
         User::factory()->count(50)->create();
     }
 }
