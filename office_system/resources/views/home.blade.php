@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{ config('app.name', 'Laravel') }} | トップページ</title>
+        <title>{{config('app.name', 'Laravel')}} | トップページ</title>
     </head>
     <body>
         @extends('layouts.app')
@@ -13,20 +13,20 @@
                 <div class="col-md-8">
                     @if (session('error'))
                         <div class="alert alert-danger text-center fw-bold">
-                            {{ session('error') }}
+                            {{session('error')}}
                         </div>
                     @endif
                     <div class="card">
-                        <div class="card-header">{{ __('Dashboard') }}</div>
+                        <div class="card-header">{{__('Dashboard')}}</div>
 
                         <div class="card-body">
                             @if (session('status'))
                                 <div class="alert alert-success" role="alert">
-                                    {{ session('status') }}
+                                    {{session('status')}}
                                 </div>
                             @endif
 
-                            {{ __('You are logged in!') }}
+                            {{__('You are logged in!')}}
                         </div>
                     </div>
                 </div>

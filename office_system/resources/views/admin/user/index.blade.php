@@ -3,25 +3,25 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{ config('app.name') }} | ユーザ一覧</title>
+        <title>{{config('app.name')}} | ユーザ一覧</title>
     </head>
     <body>
         @extends('layouts.app')
         @section('content')
             <div class="container">
-                <a href="{{ route('admin.user.create.input') }}" class="btn btn-primary">ユーザ新規登録へ</a>
+                <a href="{{route('admin.user.create.input')}}" class="btn btn-primary">ユーザ新規登録へ</a>
                 <h1 style="padding-top:50px;">ユーザ一覧</h1>
                 @if (session('success'))
                     <div class="alert alert-primary text-center fw-bold success-message" data-timeout="3000">
-                        {{ session('success') }}
+                        {{session('success')}}
                     </div>
                 @elseif (session('delete'))
                     <div class="alert alert-success text-center fw-bold delete-message" data-timeout="3000">
-                        {{ session('delete') }}
+                        {{session('delete')}}
                     </div>
                 @elseif (session('error'))
                     <div class="alert alert-danger text-center fw-bold error-message" data-timeout="3000">
-                        {{ session('error') }}
+                        {{session('error')}}
                     </div>
                 @endif
                 <table class="table table-bordered table-striped task-table table-hover">
@@ -41,24 +41,24 @@
                     <tbody>
                         @foreach ($users as $user)
                             <tr class="text-center align-middle">
-                                <td>{{ $user->id }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->role->name}}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ \Carbon\Carbon::parse($user->created_at)->format('Y年m月d日') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($user->updated_at)->format('Y年m月d日') }}</td>
+                                <td>{{$user->id}}</td>
+                                <td>{{$user->name}}</td>
+                                <td>{{$user->role->name}}</td>
+                                <td>{{$user->email}}</td>
+                                <td>{{\Carbon\Carbon::parse($user->created_at)->format('Y年m月d日')}}</td>
+                                <td>{{\Carbon\Carbon::parse($user->updated_at)->format('Y年m月d日')}}</td>
                                 <td>
-                                    <a href="{{ route('admin.user.detail', ['id' => $user->id]) }}">
+                                    <a href="{{route('admin.user.detail', ['id' => $user->id])}}">
                                         <button type="submit" class="btn btn-secondary">詳細</button>
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.user.edit.input', ['id' => $user->id]) }}">
+                                    <a href="{{route('admin.user.edit.input', ['id' => $user->id])}}">
                                         <button type="submit" class="btn btn-primary">編集</button>
                                     </a>
                                 </td>
                                 <td>
-                                    <form action="{{ route('admin.user.delete', ['id' => $user->id]) }}" method="post">
+                                    <form action="{{route('admin.user.delete', ['id' => $user->id])}}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger submit" onclick="return confirm('本当に削除しますか？');">削除</button>

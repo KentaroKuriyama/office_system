@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{ config('app.name') }} | 新規ユーザ登録</title>
+        <title>{{config('app.name')}} | 新規ユーザ登録</title>
     </head>
     <body>
         @extends('layouts.app')
@@ -15,39 +15,39 @@
                             <h2 class="fs-1 mb-5 text-center fw-bold">新規ユーザ登録画面</h2>
                             @if (session('error'))
                                 <div class="alert alert-success text-center fw-bold">
-                                    {{ session('error') }}
+                                    {{session('error')}}
                                 </div>
                             @endif
                             <p>以下の項目に必要事項を入力してください</p>
-                            <form method="post" action="{{ route('admin.user.create.send') }}">
+                            <form method="post" action="{{route('admin.user.create.send')}}">
                                 @csrf
                                 <div class="col-md-6 mb-3">
                                     <h5><b>ユーザ名</b></h5>
                                     @error('name')
                                         <b><span class="text-danger">・{{$message}}</span></b>
                                     @enderror
-                                    <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+                                    <input type="text" name="name" class="form-control" value="{{old('name')}}">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <h5><b>ログインID</b></h5>
                                     @error('login_id')
                                         <b><span class="text-danger">・{{$message}}</span></b>
                                     @enderror
-                                    <input type="text" name="login_id" class="form-control" value="{{ old('login_id') }}">
+                                    <input type="text" name="login_id" class="form-control" value="{{old('login_id')}}">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <h5><b>メールアドレス</b></h5>
                                     @error('email')
                                         <b><span class="text-danger">・{{$message}}</span></b>
                                     @enderror
-                                    <input type="email" name="email" class="form-control" value="{{ old('email') }}">
+                                    <input type="email" name="email" class="form-control" value="{{old('email')}}">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <h5><b>パスワード</b></h5>
                                     @error('password')
                                         <b><span class="text-danger">・{{$message}}</span></b>
                                     @enderror
-                                    <input type="password" name="password" class="form-control" value="{{ old('password') }}">
+                                    <input type="password" name="password" class="form-control" value="{{old('password')}}">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <h5><b>権限</b></h5>
@@ -56,7 +56,7 @@
                                     @enderror
                                     <select name="role_id" class="form-control">
                                         @foreach($roles as $role)
-                                            <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
+                                            <option value="{{$role->id}}" {{old('role_id') == $role->id ? 'selected' : ''}}>{{$role->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>

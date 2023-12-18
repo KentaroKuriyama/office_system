@@ -1,4 +1,4 @@
-{{ $user->name }}様
+{{$user->name}}様
 
 障害報告内容の確認
 
@@ -6,15 +6,15 @@
 
 ━━━━━━□■□　お問い合わせ内容　□■□━━━━━━
 
-機能：{{ config('const.trouble.function')[$input['function']] }}
+機能：{{config('const.trouble.function')[$input['function']]}}
 
-発生日時：{{ \Carbon\Carbon::parse($input['occurred_at'])->format('Y年m月d日 H時i分') }}
+発生日時：{{\Carbon\Carbon::parse($input['occurred_at'])->format('Y年m月d日 H時i分')}}
 
 現象：
-{{ $input['phenomenon'] }}
+{{$input['phenomenon']}}
 
 再現手順：
-{{ $input['reproduction_steps'] }}
+{{$input['reproduction_steps']}}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

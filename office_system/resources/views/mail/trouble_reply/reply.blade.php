@@ -1,6 +1,6 @@
 <html>
     <body>
-        <h2>{{ $user->name }}様</h2>
+        <h2>{{$user->name}}様</h2>
         <h2>{{$input['subject']}}</h2>
         <p style="line-height:3">{!!nl2br(e($input['text']))!!}</p>
         <p>

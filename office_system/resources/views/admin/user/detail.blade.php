@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{ config('app.name') }} | ユーザ詳細</title>
+        <title>{{config('app.name')}} | ユーザ詳細</title>
     </head>
     <body>
         @extends('layouts.app')
@@ -35,20 +35,20 @@
                                     </tr>
                                     <tr>
                                         <th>作成日</th>
-                                        <td>{{ $createdAt != null ? $createdAt->format('Y年m月d日') : 'デフォルトデータです'}}</td>
+                                        <td>{{$createdAt != null ? $createdAt->format('Y年m月d日') : ''}}</td>
                                     </tr>
                                     <tr>
                                         <th>更新日</th>
-                                        <td>{{ $updatedAt != null ? $updatedAt->format('Y年m月d日') : 'まだ更新されていません'}}</td>
+                                        <td>{{$updatedAt != null ? $updatedAt->format('Y年m月d日') : ''}}</td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content-between mb-4">
                                 <div class="text-center col-md-6 mb-3">
-                                    <a href="{{ route('admin.user.edit.input', ['id' => $user->id]) }}"><button type="submit" class="btn btn-primary">編集する</button></a>
+                                    <a href="{{route('admin.user.edit.input', ['id' => $user->id])}}"><button type="submit" class="btn btn-primary">編集する</button></a>
                                 </div>
                                 <div class="text-center col-md-6 mb-3">
-                                    <a href="{{ route('admin.user.index') }}"><button type="submit" class="btn btn-success">一覧に戻る</button></a>
+                                    <a href="{{route('admin.user.index')}}"><button type="submit" class="btn btn-success">一覧に戻る</button></a>
                                 </div>
                             </div>
                         </div>
