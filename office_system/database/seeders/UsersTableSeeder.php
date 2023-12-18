@@ -25,6 +25,6 @@ class UsersTableSeeder extends Seeder
             'created_at' => now(),
         ]);
 
-        User::factory()->count(50)->create();
+        User::factory()->count(30)->create();
     }
 }

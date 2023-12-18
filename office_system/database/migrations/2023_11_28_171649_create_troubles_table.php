@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedInteger('cause_process')->nullable();
             $table->unsignedBigInteger('corresponding_user_id')->nullable();
             $table->date('corresponding_limit')->nullable();
-            $table->unsignedInteger('priority')->nullable();
+            $table->unsignedInteger('priority');
             $table->text('remarks')->nullable();
             $table->unsignedInteger('status');
             $table->unsignedInteger('register_type');
