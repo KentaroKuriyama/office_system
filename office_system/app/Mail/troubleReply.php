@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
 class troubleReply extends Mailable
 {
@@ -32,6 +33,7 @@ class troubleReply extends Mailable
     {
         return new Envelope(
             subject: $this->form_input['subject'],
+            from: new Address('info@example.com', 'EBAテック株式会社 システム課'),
         );
     }
 

@@ -53,7 +53,7 @@ class TroubleManagementsController extends Controller
     public function troubleIndex(Request $request)
     {
         $request->session()->put('pass', 'ok');
-        $troubles = Trouble::where('deleted_at', null)->sortable()->orderBy('id', 'desc')->paginate(20);
+        $troubles = Trouble::sortable()->where('deleted_at', null)->orderBy('id', 'desc')->paginate(20);
 
         return view('admin.trouble.index', ['troubles' => $troubles]);
     }

@@ -34,6 +34,18 @@ class Trouble extends Model
         'deleted_at'
     ];
 
+    public $sortable = [
+        'id',
+        'function',
+        'corresponding_user_id',
+        'corresponding_limit',
+        'priority',
+        'status',
+        'register_type',
+        'created_at',
+        'updated_at'
+    ];
+
     /**
      * 障害報告内容をDBに保存する際の制限
      *

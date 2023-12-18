@@ -28,6 +28,15 @@ class User extends Authenticatable
         'password',
     ];
 
+    public $sortable = [
+        'id',
+        'name',
+        'role_id',
+        'email',
+        'created_at',
+        'updated_at',
+    ];
+
     public function setUserManagementFillable()
     {
         return $this->fillable = [

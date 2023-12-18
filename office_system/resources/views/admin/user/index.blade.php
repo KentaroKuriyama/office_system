@@ -11,15 +11,19 @@
             <div class="container">
                 <a href="{{ route('admin.user.create.input') }}" class="btn btn-primary">ユーザ新規登録へ</a>
                 <h1 style="padding-top:50px;">ユーザ一覧</h1>
-                    @if (session('delete'))
-                        <div class="alert alert-success text-center fw-bold">
-                            {{ session('delete') }}
-                        </div>
-                    @elseif (session('error'))
-                        <div class="alert alert-danger text-center fw-bold">
-                            {{ session('error') }}
-                        </div>
-                    @endif
+                @if (session('success'))
+                    <div class="alert alert-primary text-center fw-bold success-message" data-timeout="3000">
+                        {{ session('success') }}
+                    </div>
+                @elseif (session('delete'))
+                    <div class="alert alert-success text-center fw-bold delete-message" data-timeout="3000">
+                        {{ session('delete') }}
+                    </div>
+                @elseif (session('error'))
+                    <div class="alert alert-danger text-center fw-bold error-message" data-timeout="3000">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <table class="table table-bordered table-striped task-table table-hover">
                     <thead>
                         <tr class="bg-dark text-light text-center">
@@ -56,7 +60,8 @@
                                 <td>
                                     <form action="{{ route('admin.user.delete', ['id' => $user->id]) }}" method="post">
                                         @csrf
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('本当に削除しますか？');">削除</button>
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger submit" onclick="return confirm('本当に削除しますか？');">削除</button>
                                     </form>
                                 </td>
                             </tr>
@@ -65,7 +70,7 @@
                 </table>
             </div>
             <div class="d-flex justify-content-center">
-                {{$users->links()}}
+                {{$users->appends(request()->query())->links()}}
             </div>
         @endsection
     </body>

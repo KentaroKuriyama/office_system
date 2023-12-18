@@ -12,7 +12,7 @@
                 <a href="{{route('admin.trouble.create.input')}}" class="btn btn-primary">障害を登録する</a>
                 <h1 style="padding-top:50px;">障害一覧</h1>
                 @if (session('success'))
-                    <div class="alert alert-primary text-center fw-bold delete-message" data-timeout="3000">
+                    <div class="alert alert-primary text-center fw-bold success-message" data-timeout="3000">
                         {{ session('success') }}
                     </div>
                 @elseif (session('delete'))
@@ -23,7 +23,6 @@
                     <div class="alert alert-danger text-center fw-bold error-message" data-timeout="3000">
                         {{ session('error') }}
                     </div>
-
                 @endif
                 <table class="table table-bordered table-striped task-table table-hover">
                     <thead>
@@ -75,6 +74,7 @@
                                 <td>
                                     <form action="{{route('admin.trouble.delete', ['id' => $trouble->id])}}" method="post">
                                         @csrf
+                                        @method('DELETE')
                                         <button type="submit" class="btn btn-danger submit" onclick="return confirm('本当に削除しますか？');">削除</button>
                                     </form>
                                 </td>
@@ -84,7 +84,7 @@
                 </table>
             </div>
             <div class="d-flex justify-content-center">
-                {{$troubles->links()}}
+                {{$troubles->appends(request()->query())->links()}}
             </div>
         @endsection
     </body>

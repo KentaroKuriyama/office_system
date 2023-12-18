@@ -7,8 +7,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // メッセージが表示されている場合
+    let successMessages = document.querySelectorAll('.success-message');
     let deleteMessages = document.querySelectorAll('.delete-message');
     let errorMessages = document.querySelectorAll('.error-message');
+
+    successMessages.forEach(function (successMessage) {
+        setTimeout(function () {
+            // メッセージを非表示にする
+            successMessage.style.display = 'none';
+        }, parseInt(successMessage.getAttribute('data-timeout')));
+    });
 
     deleteMessages.forEach(function (deleteMessage) {
         setTimeout(function () {
