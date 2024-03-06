@@ -3,3 +3,30 @@
 a {
     text-decoration: none;
 }
+
+/* サイドバー */
+
+.sidebar-dark-primary {
+    background-color: #222d32;
+}
+
+.brand-link {
+    background-color: #46b2e8;
+}
+
+/* ナビゲーションバー */
+
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link {
+    color: #ffffff;
+}
+
+.navbar-custom {
+    background-color: #46b2e8;
+}
+
+/* テーブル */
+
+.table thead th {
+    background-color: white;
+    color: black;
+}
